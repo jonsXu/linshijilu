@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/ueditor.parse.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/third-plugin/kityformula-plugin/addKityFormulaDialog.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/third-plugin/kityformula-plugin/getKfContent.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/ueditor.plugin.oak.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/zhzf/lib/UEditor/ueditor.oak.js"></script>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>icon.ico">
+  <title>河南省交通运输厅行政执法综合管理平台</title>
+  <style>
+    html, body, #app {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .d2-home {
+      background-color: #303133;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .d2-home__main {
+      user-select: none;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .d2-home__footer {
+      width: 100%;
+      flex-grow: 0;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    .d2-home__footer > a {
+      font-size: 12px;
+      color: #ABABAB;
+      text-decoration: none;
+    }
+
+    .d2-home__loading {
+      height: 32px;
+      width: 32px;
+      margin-bottom: 20px;
+    }
+
+    .d2-home__title {
+      color: #FFF;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .d2-home__sub-title {
+      color: #ABABAB;
+      font-size: 12px;
+    }
+
+    /* 加载旋转动画 */
+    #load .load_img {
+      position: absolute;
+      left: calc(50% - 182px);
+      top: calc(50% - 182px);
+    }
+
+    .load_img img {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .load_img .jzxz1 {
+      animation: xz1 8s infinite linear;
+    }
+
+    @keyframes xz1 {
+      from {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .load_img .jzxz2 {
+      animation: xz2 7s infinite linear;
+    }
+
+    @keyframes xz2 {
+      from {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(-180deg);
+      }
+      to {
+        transform: rotate(-360deg);
+      }
+    }
+
+    .bottom-border {
+      border-style: none;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+
+    .bottom-border:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+<noscript>
+  <strong>
+    很抱歉，如果没有 JavaScript 支持，D2Admin 将不能正常工作。请启用浏览器的 JavaScript 然后继续。
+  </strong>
+</noscript>
+
+<div id="app">
+  <div class="d2-home">
+    <div class="d2-home__main">
+      <div id="load">
+        <div class="load_img">
+          <img class="jzxz1" src="image/jzxz1.png">
+          <img class="jzxz2" src="image/jzxz2.png">
+        </div>
+      </div>
+      <div class="d2-home__title" style="padding-top: 15px">
+        加载中...
+      </div>
+      <div class="d2-home__sub-title" style="position: absolute;padding-top: 300px;">
+        初次加载资源可能需要较多时间 请耐心等待
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
