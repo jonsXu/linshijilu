@@ -5,10 +5,10 @@
                 <div  v-html="insertHtml"   class="edui-toolbar"></div>
                 <div  v-html="emreHtml" class="edui-toolbar"> </div>
                 <div  v-html="editHtml"  class="edui-toolbar"></div>
-                 <div v-html="layoutHtml" class="edui-toolbar"> </div> 
+                 <div v-html="layoutHtml" class="edui-toolbar"> </div>
             </div>-->
 
-          <div class="edui-default edui-util" >
+          <div class="edui-default edui-util" style="border-bottom:1px solid #ccc">
             <template v-for="(item,i) in doType">
                 <div v-show="item =='insert'"  v-html="insertHtml" class="edui-toolbar"></div>
                 <div v-show="item =='edit'" v-html="editHtml" class="edui-toolbar"></div>
@@ -16,8 +16,8 @@
               <div v-show="i==doType.length-1" v-html="fixedHtml" class="edui-toolbar"></div>
             </template>
           </div>
-            <div class="ueditor-oak" style="width:210mm;height:700px">
-                <script class="ueditor-script-oak" :id="id" style="width: calc(100% - 10px);"  name="content" type="text/plain" />
+            <div class="ueditor-oak" style="width:210mm;min-height:700px; margin:0 auto">
+                <script class="ueditor-script-oak" :id="id" style="width: 100%;"  name="content" type="text/plain"></script>
             </div>
         </div>
     </div>
@@ -84,6 +84,8 @@ import sss from './innerHtml.js'
             let editor = UE.getEditor(this.id,{
             autoHeightEnabled: true,
             autoFloatEnabled: true,
+            elementPathEnabled: false, //删除元素路径
+            wordCount: false,    //删除字数统计
             tool_bars:{
                 fixedHtml:['undo', 'redo','snapscreen', 'print',
                 'preview', 'map', 'emotion', 'help']
@@ -91,17 +93,15 @@ import sss from './innerHtml.js'
             });
             editor.ready(function() {
                 if(that.defaultContent){
-                    editor.setContent(that.defaultContent, true);
+                    editor.setContent(that.defaultContent, false);
                 } else {
                     //默认给的病例模板
-                    console.log(sss)
-                    editor.setContent(sss, true);
+                    editor.setContent('', false);
                 }
-
+                that.editor = editor
                 setTimeout(()=>{
                 //之所以延时，是因为工具栏的dom获取必须要在editor完全构建完成后才可以获取，否则报错
                     that.html = command(editor);
-                    that.editor = editor
                     that.changePattern(that.pattern)
                     that.setState(that.html);
                 },200);
@@ -137,25 +137,25 @@ import sss from './innerHtml.js'
                 }
             }
         },
+        
         //获取editor的内容
         getEditorContent(){
-            console.log(
-                
-            )
             return {content:this.editor.getContent(),editor:this.editor}
         },
         //获取编辑器的控件控制器
         getChangeWidget(){
-           let w=  new ChangeWidget(this.id)
-           w.init()
-           return w 
+            let w=  new ChangeWidget(this.id)
+                w.init()
+                return w
+           
         },
-        
+
         /**
          * @method 设计模式
          */
         designPattern() {
             let editor = this.editor;
+
             editor.body.setAttribute('pattern','design');
             //editor.body.setAttribute('contenteditable','true');
             editor.setEnabled();
@@ -195,5 +195,4 @@ import sss from './innerHtml.js'
   }
 </script>
 <style lang="scss" src="./index.scss">
-
 </style>

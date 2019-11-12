@@ -281,15 +281,16 @@
       orgID : orgID||'',
       color : $id('color').value,
       defaultValue :$id('defaultValue').value ,
-      bindData : fnParseOptions(name,gTimestamp).bindData
+      bindData : fnParseOptions(name,gTimestamp).bindData,
+      selectVal:$id('defaultValue').value
     };
     if(obj.dynaUrl !=''){ //存在动态获取数据的地址
-      UE.ajax.request(baseUrl+obj.dynaUrl,{
+      UE.ajax.request(obj.dynaUrl,{
         'method': 'GET',
         'async' : false, //同步 避免弹出窗口先关闭
         'dataType': 'json',
         'onsuccess':function(data){
-          var response = eval('('+data.response+')');
+          var response = eval('('+data.response+')').data;
           obj = {
             type : 'select',
             dynaUrl : $id('url').value,
@@ -297,7 +298,8 @@
             orgID : orgID||'',
             color : $id('color').value,
             defaultValue :$id('defaultValue').value ,
-            bindData : response
+            bindData : response,
+            selectVal:$id('defaultValue').value
           };
           options = fnParseOptions(name,gTimestamp,response).html;
         },
@@ -315,11 +317,22 @@
     var placeStyle = 'width:auto'; //防止ueditor改变样式
     if( !oNode ) {
       try {
+
+        let selectSpanHtml  = ``
+        for(var i=0;i<obj.bindData.length;i++){
+          let item = obj.bindData[i]
+          let classStyle=''
+          item.SELECTED?classStyle = "selected oak-field li":classStyle = "oak-field li"
+          selectSpanHtml += `<span class="${classStyle}" value="${item.VALUE}" title="${item.TEXT}">${item.TEXT}</span>`
+        }
+        
+        let selectHtml = `<span class="oak-field oak-select-root" style="display: none;"><span class="oak-select-content oak-field"><span class="oak-select oak-field" data-type="select">${selectSpanHtml}</span></span></span>`
         //{|- 使用边界，防止用户删除了span标签，程序处理要把边界替换为空
-        var html = '<span class="oak-field oakplugin oak-field-activeContent" style="'+placeStyle+'" oakplugin="select" id="'+orgID+'" title="'+gTitle+'" obj="'+objStr+'" contenteditable="false">';
+        var html = '<span class="oak-field oakplugin oak-field-activeContent" style="'+placeStyle+'" oakplugin="select" id="'+orgID+'" title="'+gTitle+'" selectval="'+obj.selectVal+'" obj="'+objStr+'" contenteditable="false">';
         html += '<span class="oak-field oak-left" style="'+placeStyle+'" contenteditable="false"></span>';
         html += '<span class="oak-field oak-field-value" style="color: '+obj.color+'">'+options+'</span>';
         html += '<span class="oak-field oak-right" style="'+placeStyle+'" contenteditable="false"></span>';
+        html += selectHtml
         html +='</span>';
         editor.execCommand('insertHtml',html);
         return true ;
@@ -334,6 +347,7 @@
     } else {
       oNode.setAttribute('title',gTitle);
       oNode.setAttribute('obj',objStr);
+      oNode.setAttribute('selectval',obj.selectVal);
       oNode.innerHTML = '<span class="oak-field oak-left" style="'+placeStyle+'" contenteditable="false"></span>'
           + '<span class="oak-field oak-field-value" style="color: '+obj.color+'">'+options+'</span>'
           + '<span class="oak-field oak-right" style="'+placeStyle+'" contenteditable="false"></span>';

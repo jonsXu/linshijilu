@@ -113,7 +113,7 @@
     };
     var objStr = JSON.stringify(obj).replace(/\"/g,'\'');
     var placeStyle = 'width:auto;'; //防止ueditor改变样式
-    var style = 'min-height:16px;min-width:'+obj.width+'px;font-size:'+obj.fontSize+'px;color:'+obj.color+';text-align:'+obj.textAlign;
+    var style = 'display:inline;min-height:16px;min-width:'+obj.width+'px;font-size:'+obj.fontSize+'px;color:'+obj.color+';text-align:'+obj.textAlign;
     if( !oNode ) {
       try {
         //{|- 使用边界，防止用户删除了span标签，程序处理要把边界替换为空
